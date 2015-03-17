@@ -1,0 +1,6 @@
+﻿#Statistika
+
+Pagal tai kaip supratau problemą, padariau, kad saugotų statistikos duomenys HashSet'e. Kur **Key** => [AppId : TimeStamp(tipo data)] ir **Value** => update'inama reikšmė. UPDATE'UI arba INSERT'UI panaudojau [HINCRBY](http://redis.io/commands/hincrby). Duomenų gavimui [HGETALL](http://redis.io/commands/hgetall). Šiaip galima būtų ir [MGET](http://redis.io/commands/mget) duomenų pasiėmimui per vieną kartą padaryti(jeigu sugoma ne HashSet'e), bet neradau tokios komandos StackExchange.Redis kliente. Gal blogai ieškojau, nzn... Rezultatai manau gana neblogi. Kita vertus šitas app'sas ir Redis'as veikia ant to pačio PC. Redis versija **2.6.12** 32Bit. Visi nustatymai default. StackExchange.Redis HashIncrement metodas turi vieną overload'ą kuris priima CommandFlags.FireAndForget. Pabandžiau keletą kartų ir kažkodėl nevisada tvarkingai suveikdavo. Arba aš nzn kaip turėtų suveikti. Anyway palikau sprendimą be CommandFlags.FireAndForget. Manau tai nebus bottleneck'as.
+
+**P.S.:**
+Pati aplikacija nepretenduoja būti testbench'u, dėl to ConcurrencyLevel ~ 10 ir AppCount = 600 ir t.t. Jeigu nustatyti ConcurrencyLevel daugiau- meta OutOfMemoryException - nesigilinau kodėl. Veikiausiai dėl StackExchange.Redis :). Galima paleisti keleta instance'u, bet tada statsai bus teisingi tik paskutinėje applikacijoje. Anyway manau mintis aiški.
